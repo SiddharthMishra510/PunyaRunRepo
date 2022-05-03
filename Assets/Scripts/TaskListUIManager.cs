@@ -1,13 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 
-public class TaskList : MonoBehaviour
+public class TaskListUIManager : MonoBehaviour
 {
-    private List<Restaurant> pickUpList = new List<Restaurant>();
-    private List<House> deliverToList = new List<House>();
-
     [SerializeField]
     private List<TextMeshProUGUI> pickUpTexts;
     [SerializeField]
@@ -18,49 +14,17 @@ public class TaskList : MonoBehaviour
     private GameObject taskListUI;
     [SerializeField]
     private RectTransform hidePosition;
-    private bool isOpen = true;
-    float tasListUIIntitialXPos;
 
+    float tasListUIIntitialXPos;
+    private bool isOpen = true;
     private readonly int maxTextCountAllowed = 5;
 
     private void Start()
     {
         tasListUIIntitialXPos = taskListUI.transform.position.x;
     }
-    public bool AreTasksOver()
-    {
-        if (pickUpList.Count == 0 && deliverToList.Count == 0)
-        {
-            return true;
-        }
-        return false;
-    }
 
-    public void AddTask(Restaurant restaurant)
-    {
-        pickUpList.Add(restaurant);
-        UpdatePickupTexts();
-    }
-
-    public void AddTask(House house)
-    {
-        deliverToList.Add(house);
-        UpdateDeliverToTexts();
-    }
-
-    public void RemoveTask(Restaurant restaurant)
-    {
-        pickUpList.Remove(restaurant);
-        UpdatePickupTexts();
-    }
-
-    public void RemoveTask(House house)
-    {
-        deliverToList.Remove(house);
-        UpdateDeliverToTexts();
-    }
-
-    private void UpdatePickupTexts()
+    public void UpdatePickupTexts(List<Restaurant> pickUpList)
     {
         foreach (var textField in pickUpTexts)
         {
@@ -74,7 +38,7 @@ public class TaskList : MonoBehaviour
         }
     }
 
-    private void UpdateDeliverToTexts()
+    public void UpdateDeliverToTexts(List<House> deliverToList)
     {
         foreach (var textField in deliverToTexts)
         {
